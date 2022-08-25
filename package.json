@@ -33,6 +33,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "js-base64": "^3.7.2",
     "lodash": "^4.17.21"
   }
 }
