@@ -4,7 +4,8 @@
   "description": "简洁、强大的 Hexo 在线编辑器 | A Powerful Manager For Hexo",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js"
+    "build": "npx webpack --config webpack.config.js",
+    "build.dev": "npx webpack --config dev.webpack.config.js"
   },
   "repository": {
     "type": "git",
