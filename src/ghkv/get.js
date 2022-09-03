@@ -31,6 +31,7 @@ export default async function ghkv_get(__config, key) {
         },
     });
     let shaValue = await shavl.json();
+    // console.log(shaValue);
     shaValue = shaValue[0].sha;
     // 拼接为获取文件的链接
     let url = encodeURI(
