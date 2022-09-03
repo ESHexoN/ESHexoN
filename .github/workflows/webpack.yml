@@ -33,8 +33,8 @@ jobs:
         
     - name: GitHub Push
       run: |
-        git config --global email icolabot@e.yfun.top
-        git config --global name iColaBot
+        git config --global user.email icolabot@e.yfun.top
+        git config --global user.name iColaBot
         git add .
         git commit -m ":zap: 成功完成构建"
         git push -u origin master
