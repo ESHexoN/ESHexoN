@@ -1,8 +1,9 @@
 import env from './src/env.js';
-// import {ghkv_get, ghkv_set, ghkv_delete} from './src/ghkv.js';
 import ghkv_set from './src/ghkv/set.js';
 import ghkv_get from './src/ghkv/get.js';
 import res from './src/res.js';
+import md5 from 'md5';
+import check_token from './src/check_token.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -14,6 +15,7 @@ async function handleRequest(request) {
     const urlObj = new URL(urlStr);
     const domain = urlObj.hostname;
     const path = urlObj.pathname;
+    const timestamp = Date.now(new Date());
     // GitHub Token
     const _GITHUB_TOKEN = env("GITHUB_TOKEN");
     // GitHub 主仓库, branch
@@ -60,6 +62,29 @@ async function handleRequest(request) {
             } else {
                 return res("403", "用户名或密码不符合要求。");
             }
+        }
+    }
+
+    if (path.startsWith("/api/login")) {
+        /**
+         * 用户登录
+         */
+        var requestBody = await request.text();
+        requestBody = JSON.parse(requestBody);
+        var userdata = await ghkv_get(ghkv_config, "user");
+        if (userdata && userdata[0].username == requestBody.username && userdata[0].password == requestBody.password) {
+            return res("200", md5(userdata[0].username + userdata[0].password + `${new Date(Date.now()).getFullYear()}${new Date(Date.now()).getMonth()+1}`))
+        } else {
+            return res("403", "用户名或密码错误。");
+        }
+    }
+
+    if (path.startsWith("/api/check_token")) {
+        var requestBody = await request.text();
+        if (await check_token(ghkv_config, requestBody) == true) {
+            return res("200", "Token 有效。");
+        } else {
+            return res("403", "Token 无效。");
         }
     }
     return new Response(JSON.stringify({
