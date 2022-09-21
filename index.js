@@ -4,6 +4,7 @@ import ghkv_get from './src/ghkv/get.js';
 import res from './src/res.js';
 import md5 from 'md5';
 import check_token from './src/check_token.js';
+import get_posts_list from './src/repo/get.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -32,6 +33,12 @@ async function handleRequest(request) {
         token: _GITHUB_TOKEN,
         filename: _GITHUB_CONFIG_NAME,
         branch: _GITHUB_SUB_BRANCH,
+    }
+    const blog_repo_config = {
+        username: _GITHUB_MAIN_REPO.split("/")[0],
+        repo: _GITHUB_MAIN_REPO.split("/")[1],
+        token: _GITHUB_TOKEN,
+        branch: _GITHUB_MAIN_BRANCH,
     }
     // console.log(ghkv_config);
     if (path.startsWith("/api/reg")) {
@@ -80,9 +87,23 @@ async function handleRequest(request) {
     }
 
     if (path.startsWith("/api/check_token")) {
+        /**
+         * 检查 Token 是否有效
+         */
         var requestBody = await request.text();
         if (await check_token(ghkv_config, requestBody) == true) {
             return res("200", "Token 有效。");
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    if (path.startsWith("/api/get_posts_list")) {
+        /**
+         * 获取文章列表
+         */
+        var requestBody = await request.text();
+        if (await check_token(ghkv_config, requestBody) == true) {
+            return res("200", await get_posts_list(blog_repo_config));
         } else {
             return res("403", "Token 无效。");
         }
