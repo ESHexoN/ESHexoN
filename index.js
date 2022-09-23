@@ -4,7 +4,7 @@ import ghkv_get from './src/ghkv/get.js';
 import res from './src/res.js';
 import md5 from 'md5';
 import check_token from './src/check_token.js';
-import get_posts_list from './src/repo/get.js';
+import get_posts_list from './src/repo/get_posts.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
