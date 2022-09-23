@@ -90,7 +90,7 @@ async function handleRequest(request) {
         /**
          * 检查 Token 是否有效
          */
-        var requestBody = await request.text();
+        var requestBody = JSON.parse(await request.text()).token;
         if (await check_token(ghkv_config, requestBody) == true) {
             return res("200", "Token 有效。");
         } else {
@@ -101,7 +101,7 @@ async function handleRequest(request) {
         /**
          * 获取文章列表
          */
-        var requestBody = await request.text();
+        var requestBody = JSON.parse(await request.text()).token;
         if (await check_token(ghkv_config, requestBody) == true) {
             return res("200", await get_posts_list(blog_repo_config));
         } else {
