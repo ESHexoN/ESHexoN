@@ -7,6 +7,7 @@ import check_token from './src/check_token.js';
 import get_posts_list from './src/repo/get_posts.js';
 import get_drafts_list from './src/repo/get_drafts.js';
 import add_posts from './src/repo/add_posts.js';
+import delete_posts from './src/repo/delete_posts.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -137,6 +138,55 @@ async function handleRequest(request) {
             return res("403", "Token 无效。");
         }
     }
+    if (path.startsWith("/api/add_drafts")) {
+        /**
+         * 获取文章列表
+         */
+        var requestBody = JSON.parse(await request.text());
+        if (await check_token(ghkv_config, requestBody.token) == true) {
+            var status = await add_posts(blog_repo_config, "drafts", requestBody.filename, requestBody.content, requestBody.b64);
+            if (status) {
+                return res("200", "上传成功。");
+            } else {
+                return res("500", "上传失败。");
+            }
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    if (path.startsWith("/api/delete_posts")) {
+        /**
+         * 获取文章列表
+         */
+        var requestBody = JSON.parse(await request.text());
+        if (await check_token(ghkv_config, requestBody.token) == true) {
+            var status = await delete_posts(blog_repo_config, "posts", requestBody.filename);
+            if (status) {
+                return res("200", "删除成功。");
+            } else {
+                return res("500", "删除失败。");
+            }
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    if (path.startsWith("/api/delete_drafts")) {
+        /**
+         * 获取文章列表
+         */
+        var requestBody = JSON.parse(await request.text());
+        if (await check_token(ghkv_config, requestBody.token) == true) {
+            var status = await delete_posts(blog_repo_config, "drafts", requestBody.filename);
+            if (status) {
+                return res("200", "删除成功。");
+            } else {
+                return res("500", "删除失败。");
+            }
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+
     return new Response(JSON.stringify({
         main: _GITHUB_MAIN_REPO,
         mainbranch: _GITHUB_MAIN_BRANCH,
