@@ -6,6 +6,7 @@ import md5 from 'md5';
 import check_token from './src/check_token.js';
 import get_posts_list from './src/repo/get_posts.js';
 import get_drafts_list from './src/repo/get_drafts.js';
+import add_posts from './src/repo/add_posts.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -116,6 +117,22 @@ async function handleRequest(request) {
         var requestBody = JSON.parse(await request.text()).token;
         if (await check_token(ghkv_config, requestBody) == true) {
             return res("200", await get_drafts_list(blog_repo_config));
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    if (path.startsWith("/api/add_posts")) {
+        /**
+         * 获取文章列表
+         */
+        var requestBody = JSON.parse(await request.text());
+        if (await check_token(ghkv_config, requestBody.token) == true) {
+            var status = await add_posts(blog_repo_config, "posts", requestBody.filename, requestBody.content, requestBody.b64);
+            if (status) {
+                return res("200", "上传成功。");
+            } else {
+                return res("500", "上传失败。");
+            }
         } else {
             return res("403", "Token 无效。");
         }
