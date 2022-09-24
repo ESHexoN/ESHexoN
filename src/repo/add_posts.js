@@ -1,8 +1,8 @@
 import { Base64 } from 'js-base64';
-export default async function add_posts(__config, type, filename, content, b64) {
-    var posts_dir;
-    if (type == "drafts") posts_dir = "source/_drafts/"+ filename;
-    else posts_dir = "source/_posts/" + filename;
+export default async function add_posts(__config, filename, content, b64) {
+    var posts_dir = filename;
+    // if (type == "drafts") posts_dir = "source/_drafts/"+ filename;
+    // else posts_dir = "source/_posts/" + filename;
     var  __username = __config["username"];
     var  __repo = __config["repo"];
     var  __token = __config["token"];

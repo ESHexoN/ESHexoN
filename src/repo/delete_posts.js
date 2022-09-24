@@ -1,7 +1,7 @@
-export default async function delete_posts(__config, type, filename) {
-    var posts_dir;
-    if (type == "drafts") posts_dir = "source/_drafts/"+ filename;
-    else posts_dir = "source/_posts/" + filename;
+export default async function delete_posts(__config, filename) {
+    var posts_dir = filename;
+    // if (type == "drafts") posts_dir = "source/_drafts/"+ filename;
+    // else posts_dir = "source/_posts/" + filename;
     var  __username = __config["username"];
     var  __repo = __config["repo"];
     var  __token = __config["token"];

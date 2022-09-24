@@ -144,7 +144,7 @@ async function handleRequest(request) {
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
-            var status = await add_posts(blog_repo_config, "drafts", requestBody.filename, requestBody.content, requestBody.b64);
+            var status = await add_posts(blog_repo_config, requestBody.filename, requestBody.content, requestBody.b64);
             if (status) {
                 return res("200", "上传成功。");
             } else {
@@ -160,7 +160,7 @@ async function handleRequest(request) {
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
-            var status = await delete_posts(blog_repo_config, "posts", requestBody.filename);
+            var status = await delete_posts(blog_repo_config, requestBody.filename);
             if (status) {
                 return res("200", "删除成功。");
             } else {
@@ -176,7 +176,7 @@ async function handleRequest(request) {
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
-            var status = await delete_posts(blog_repo_config, "drafts", requestBody.filename);
+            var status = await delete_posts(blog_repo_config, requestBody.filename);
             if (status) {
                 return res("200", "删除成功。");
             } else {
