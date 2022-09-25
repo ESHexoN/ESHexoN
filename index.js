@@ -113,7 +113,7 @@ async function handleRequest(request) {
     }
     if (path.startsWith("/api/get_drafts_list")) {
         /**
-         * 获取文章列表
+         * 获取草稿列表
          */
         var requestBody = JSON.parse(await request.text()).token;
         if (await check_token(ghkv_config, requestBody) == true) {
@@ -124,7 +124,7 @@ async function handleRequest(request) {
     }
     if (path.startsWith("/api/add_posts")) {
         /**
-         * 获取文章列表
+         * 新增文章
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
@@ -140,7 +140,7 @@ async function handleRequest(request) {
     }
     if (path.startsWith("/api/add_drafts")) {
         /**
-         * 获取文章列表
+         * 新增草稿
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
@@ -156,7 +156,7 @@ async function handleRequest(request) {
     }
     if (path.startsWith("/api/delete_posts")) {
         /**
-         * 获取文章列表
+         * 删除文章
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
@@ -172,7 +172,7 @@ async function handleRequest(request) {
     }
     if (path.startsWith("/api/delete_drafts")) {
         /**
-         * 获取文章列表
+         * 删除草稿
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
