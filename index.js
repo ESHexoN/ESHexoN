@@ -8,6 +8,8 @@ import get_posts_list from './src/repo/get_posts.js';
 import get_drafts_list from './src/repo/get_drafts.js';
 import add_posts from './src/repo/add_posts.js';
 import delete_posts from './src/repo/delete_posts.js';
+import get_config from './src/config/get.js';
+import set_config from './src/config/set.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -198,6 +200,28 @@ async function handleRequest(request) {
             } else {
                 return res("500", "修改失败。");
             }
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    if (path.startsWith("/api/get_config")) {
+        var requestBody = JSON.parse(await request.text());
+        if (requestBody.token && await check_token(ghkv_config, requestBody.token) == true) {
+            var rtconfig = await get_config(ghkv_config, requestBody.key, true);
+            if (typeof rtconfig != "object") return res("200", rtconfig);
+            else return res("200", JSON.stringify(rtconfig));
+        } else {
+            var rtconfig = await get_config(ghkv_config, requestBody.key, false);
+            if (typeof rtconfig != "object") return res("403", rtconfig);
+            else return res("403", JSON.stringify(rtconfig));
+        }
+    }
+    if (path.startsWith("/api/set_config")) {
+        var requestBody = JSON.parse(await request.text());
+        if (requestBody.token && await check_token(ghkv_config, requestBody.token) == true) {
+            var rtconfig = await get_config(ghkv_config, requestBody.key, true);
+            if (rtconfig) return res("200", "修改成功。");
+            else return res("500", "修改失败。");
         } else {
             return res("403", "Token 无效。");
         }

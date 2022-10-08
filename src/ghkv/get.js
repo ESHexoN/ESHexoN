@@ -5,9 +5,9 @@ export default async function ghkv_get(__config, key) {
     var __filename = __config["filename"];
     var __branch = __config["branch"];
     // 检查传入的信息是否完整
-    if (!__token || !__filename || !__branch) {
+    if (!__token || !__filename || !__branch || !__username) {
         console.error(
-            "[Error] Please Check the Config. (token/filename/branch)"
+            "[Error] Please Check the Config. (token/filename/branch/username)"
         );
         return false;
     }
