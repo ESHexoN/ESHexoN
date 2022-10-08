@@ -186,7 +186,22 @@ async function handleRequest(request) {
             return res("403", "Token 无效。");
         }
     }
-
+    if (path.startsWith("/api/edit_config")) {
+        /**
+         * 修改配置
+         */
+        var requestBody = JSON.parse(await request.text());
+        if (await check_token(ghkv_config, requestBody.token) == true) {
+            var status = await add_posts(blog_repo_config, requestBody.filename, requestBody.content, requestBody.b64);
+            if (status) {
+                return res("200", "修改成功。");
+            } else {
+                return res("500", "修改失败。");
+            }
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
     return new Response(JSON.stringify({
         main: _GITHUB_MAIN_REPO,
         mainbranch: _GITHUB_MAIN_BRANCH,
