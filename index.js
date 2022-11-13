@@ -10,6 +10,7 @@ import add_posts from './src/repo/add_posts.js';
 import delete_posts from './src/repo/delete_posts.js';
 import get_config from './src/config/get.js';
 import set_config from './src/config/set.js';
+import get_file_content from './src/repo/get_file_content.js';
 // import _ from 'lodash';
 
 addEventListener("fetch", event => {
@@ -219,13 +220,31 @@ async function handleRequest(request) {
     if (path.startsWith("/api/set_config")) {
         var requestBody = JSON.parse(await request.text());
         if (requestBody.token && await check_token(ghkv_config, requestBody.token) == true) {
-            var rtconfig = await get_config(ghkv_config, requestBody.key, true);
+            var rtconfig = await set_config(ghkv_config, requestBody.key, requestBody.value, true);
             if (rtconfig) return res("200", "修改成功。");
             else return res("500", "修改失败。");
         } else {
             return res("403", "Token 无效。");
         }
     }
+    if (path.startsWith("/api/get_file_content")) {
+        var requestBody = JSON.parse(await request.text());
+        if (requestBody.token && await check_token(ghkv_config, requestBody.token) == true) {
+            let data = await get_file_content(blog_repo_config, requestBody.filename);
+            return res("200", data);
+        } else {
+            return res("403", "Token 无效。");
+        }
+    }
+    // if (path.startsWith("/api/status")) {
+    //     // Status 统计文章总数和草稿总数，是鉴权接口
+    //     var requestBody = JSON.parse(await request.text());
+    //     if (await check_token(ghkv_config, requestBody.token) == true) {
+
+    //     } else {
+    //         return res("403", "Token 无效。");
+    //     }
+    // }
     return new Response(JSON.stringify({
         main: _GITHUB_MAIN_REPO,
         mainbranch: _GITHUB_MAIN_BRANCH,
