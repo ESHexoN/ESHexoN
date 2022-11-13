@@ -1,4 +1,4 @@
-export async function get_file_content(__config, filename) {
+export default async function get_file_content(__config, filename) {
     var __username = __config["username"];
     var __repo = __config["repo"];
     var __token = __config["token"];
@@ -18,11 +18,12 @@ export async function get_file_content(__config, filename) {
             "User-Agent": "ghKV Clinet",
         },
     });
-    let shaValue = await shavl.json();
+    let shaValue = await shavl.text();
+    shaValue = JSON.parse(shaValue)[0].sha;
     let url = encodeURI(
         `https://raw.githubusercontent.com/${__username}/${
             __repo
-        }/${shaValue}${__filename}?dt=${Math.floor(
+        }/${shaValue}/${__filename}?dt=${Math.floor(
             Math.random() * 100000000
         )}`
     );
@@ -32,5 +33,6 @@ export async function get_file_content(__config, filename) {
             Authorization: `token ${__token}`,
         },
     });
+    console.log(url);
     return await value.text();
 }
