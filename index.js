@@ -131,7 +131,7 @@ async function handleRequest(request) {
          */
         var requestBody = JSON.parse(await request.text());
         if (await check_token(ghkv_config, requestBody.token) == true) {
-            var status = await add_posts(blog_repo_config, "posts", requestBody.filename, requestBody.content, requestBody.b64);
+            var status = await add_posts(blog_repo_config, requestBody.filename, requestBody.content, requestBody.b64);
             if (status) {
                 return res("200", "上传成功。");
             } else {

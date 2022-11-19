@@ -1,6 +1,7 @@
 import { Base64 } from 'js-base64';
 export default async function add_posts(__config, filename, content, b64) {
     var posts_dir = filename;
+    console.log(posts_dir)
     // if (type == "drafts") posts_dir = "source/_drafts/"+ filename;
     // else posts_dir = "source/_posts/" + filename;
     var  __username = __config["username"];
@@ -52,6 +53,7 @@ export default async function add_posts(__config, filename, content, b64) {
         cfg
     );
     console.info(`https://api.github.com/repos/${__username}/${__repo}/contents/${posts_dir}?ref=${__branch}`);
+    console.log(await putC.text());
     // 返回 状态值
     if (putC["status"] == 200 || putC["status"] == 201) {
         return true;
