@@ -4,13 +4,13 @@
 
 ## 使用前
 
-1. [你需要对您的 Hexo 博客实现集成部署。](https://eshexon-docs.netlify.app/start.html#%E5%BC%80%E5%A7%8B%E5%89%8D)
+1. [你需要对您的 Hexo 博客实现集成部署](https://eshexon-docs.netlify.app/start.html#%E5%BC%80%E5%A7%8B%E5%89%8D)。
 
 > 实现集成部署后，只需要对 Git 仓库的内容进行修改，CI 就会自动完成「生成文件」等一系列操作。
 
-2. [注册 GitHub 账号](https://github.com/signup)
+2. [注册 GitHub 账号](https://github.com/signup)。
 
-3. [注册 Deno 账号](https://dash.deno.com/signin) 或 [注册 Cloudflare 账号](https://dash.cloudflare.com/sign-up)
+3. [注册 Deno 账号](https://dash.deno.com/signin) 或 [注册 Cloudflare 账号](https://dash.cloudflare.com/sign-up)。
 
 ## 部署后端
 
