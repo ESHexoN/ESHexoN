@@ -236,15 +236,6 @@ async function handleRequest(request) {
             return res("403", "Token 无效。");
         }
     }
-    // if (path.startsWith("/api/status")) {
-    //     // Status 统计文章总数和草稿总数，是鉴权接口
-    //     var requestBody = JSON.parse(await request.text());
-    //     if (await check_token(ghkv_config, requestBody.token) == true) {
-
-    //     } else {
-    //         return res("403", "Token 无效。");
-    //     }
-    // }
     return new Response(JSON.stringify({
         main: _GITHUB_MAIN_REPO,
         mainbranch: _GITHUB_MAIN_BRANCH,
